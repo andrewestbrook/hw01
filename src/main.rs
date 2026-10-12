@@ -85,6 +85,15 @@ fn roll_die(seed: u64) -> u64 {
     rng.random_range(1..=DIE_SIDES)
 }
 
+/// Roll count dice with seeds seed, seed + 1, ... and return their sum.
+fn roll_many(seed: u64, count: u64) -> u64 {
+    let mut total = 0;
+    for offset in 0..count {
+        total += roll_die(seed + offset);
+    }
+    total
+}
+
 fn main() {
     println!("Hello, world!");
 }
