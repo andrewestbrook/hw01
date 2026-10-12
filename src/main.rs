@@ -33,6 +33,11 @@ fn print_menu() {
     println!("{MENU_QUIT}. Quit");
 }
 
+/// Return true if there is enough gold to pay the cost.
+fn can_afford(gold: u64, cost: u64) -> bool {
+    gold >= cost
+}
+
 fn main() {
     println!("Hello, world!");
 }
