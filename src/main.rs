@@ -51,6 +51,34 @@ fn hunt_food(roll: u64) -> u64 {
     }
 }
 
+/// Ask until the user types a whole number from min to max (inclusive).
+fn read_number(min: u64, max: u64) -> u64 {
+    loop {
+        print!("Enter a number from {min} to {max}: ");
+        io::stdout().flush().expect("failed to flush stdout");
+
+        let mut line = String::new();
+        match io::stdin().read_line(&mut line) {
+            Ok(0) => {
+                println!();
+                println!("No more input. Goodbye!");
+                std::process::exit(0);
+            }
+            Ok(_) => {}
+            Err(_) => {
+                println!("Could not read input. Try again.");
+                continue;
+            }
+        }
+
+        match line.trim().parse::<u64>() {
+            Ok(value) if value >= min && value <= max => return value,
+            Ok(_) => println!("That number is out of range."),
+            Err(_) => println!("Please enter a whole number."),
+        }
+    }
+}
+
 fn main() {
     println!("Hello, world!");
 }
