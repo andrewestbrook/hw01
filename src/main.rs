@@ -79,6 +79,12 @@ fn read_number(min: u64, max: u64) -> u64 {
     }
 }
 
+/// Roll one six-sided die using a generator seeded from seed.
+fn roll_die(seed: u64) -> u64 {
+    let mut rng = StdRng::seed_from_u64(seed);
+    rng.random_range(1..=DIE_SIDES)
+}
+
 fn main() {
     println!("Hello, world!");
 }
