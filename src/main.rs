@@ -94,6 +94,15 @@ fn roll_many(seed: u64, count: u64) -> u64 {
     total
 }
 
+/// Print the player's gold, food, and day.
+fn print_status(gold: u64, food: u64, day: u64) {
+    println!();
+    println!("--- Status ---");
+    println!("Day:  {day}");
+    println!("Gold: {gold}");
+    println!("Food: {food}");
+}
+
 fn main() {
     println!("Hello, world!");
 }
