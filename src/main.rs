@@ -103,6 +103,54 @@ fn print_status(gold: u64, food: u64, day: u64) {
     println!("Food: {food}");
 }
 
+/// Hold the game state, run the menu loop, and call the other functions.
 fn main() {
-    println!("Hello, world!");
+    println!("Welcome to Trail Trader!");
+    println!("Choose a seed for this journey.");
+    let seed = read_number(1, MAX_SEED);
+
+    let mut gold = START_GOLD;
+    let mut food = 0;
+    let mut day = 1;
+    let mut roll_count = 0;
+
+    loop {
+        print_menu();
+        let choice = read_number(MENU_BUY, MENU_QUIT);
+
+        if choice == MENU_BUY {
+            if !can_afford(gold, FOOD_PRICE) {
+                println!("You cannot afford any food.");
+                continue;
+            }
+            let max_units = gold / FOOD_PRICE;
+            println!("How many units of food? (max {max_units})");
+            let units = read_number(1, max_units);
+            gold -= units * FOOD_PRICE;
+            food += units;
+            day += 1;
+            println!("You bought {units} food for {} gold.", units * FOOD_PRICE);
+        } else if choice == MENU_HUNT {
+            let roll = roll_die(seed + roll_count);
+            roll_count += 1;
+            let gained = hunt_food(roll);
+            food += gained;
+            day += 1;
+            println!("You rolled a {roll} and gained {gained} food.");
+        } else if choice == MENU_TRADE {
+            let total = roll_many(seed + roll_count, TRADE_DICE);
+            roll_count += TRADE_DICE;
+            let earned = TRADE_MULTIPLIER * total;
+            gold += earned;
+            day += 1;
+            println!("The caravan dice totaled {total}. You earned {earned} gold.");
+        } else if choice == MENU_STATUS {
+            print_status(gold, food, day);
+        } else {
+            println!("Final status:");
+            print_status(gold, food, day);
+            println!("Safe travels!");
+            break;
+        }
+    }
 }
