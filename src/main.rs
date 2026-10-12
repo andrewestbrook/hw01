@@ -38,6 +38,19 @@ fn can_afford(gold: u64, cost: u64) -> bool {
     gold >= cost
 }
 
+/// Return the food gained for a hunting roll.
+fn hunt_food(roll: u64) -> u64 {
+    if roll <= 1 {
+        HUNT_FOOD_POOR
+    } else if roll <= 3 {
+        HUNT_FOOD_FAIR
+    } else if roll <= 5 {
+        HUNT_FOOD_GOOD
+    } else {
+        HUNT_FOOD_GREAT
+    }
+}
+
 fn main() {
     println!("Hello, world!");
 }
